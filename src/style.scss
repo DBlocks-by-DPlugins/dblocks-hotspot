@@ -6,19 +6,20 @@
  */
 
 .wp-block-create-block-focal {
-	background-color: #ff8c4a;
-	position: relative;
-	aspect-ratio: 16/9;
-	width: 100%;
+  background-color: #ff8c4a;
+  position: relative;
+  aspect-ratio: 16/9;
+  width: 100%;
 
-	color: #fff;
-	padding: 2px;
+  color: #fff;
+  padding: 2px;
 }
 
 .drag-point {
-	position: absolute;
-	width: 2rem;
-	height: 2rem;
-	background-color: blue;
-	border-radius: 50%;
+  position: absolute;
+  width: 2rem;
+  height: 2rem;
+  background-color: blue;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
 }
