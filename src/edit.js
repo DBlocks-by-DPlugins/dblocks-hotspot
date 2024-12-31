@@ -1,7 +1,13 @@
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, FocalPointPicker, Button, ToggleControl } from '@wordpress/components';
+import {
+	PanelBody,
+	FocalPointPicker,
+	Button,
+	ToggleControl,
+	__experimentalNumberControl as NumberControl
+} from '@wordpress/components';
 import './editor.scss';
 
 export default function Edit() {
@@ -9,6 +15,7 @@ export default function Edit() {
 	const [isDragging, setIsDragging] = useState(false);
 	const [draggedIndex, setDraggedIndex] = useState(null);
 	const [isDraggingDisabled, setIsDraggingDisabled] = useState(false);
+	const [value, setValue] = useState('');
 
 	const addFocalPoint = () => {
 		setFocalPoints([...focalPoints, { x: 0.5, y: 0.5 }]);
@@ -49,10 +56,22 @@ export default function Edit() {
 		setDraggedIndex(null);
 	};
 
+	const deleteFocalPoint = (index) => {
+		setFocalPoints(focalPoints.filter((_, i) => i !== index));
+	};
+
 	return (
 		<>
 			<InspectorControls>
 				<PanelBody title={__('Settings', 'focal')}>
+					<NumberControl
+						__next40pxDefaultSize
+						label="Starting number"
+						isShiftStepEnabled={true}
+						onChange={setValue}
+						shiftStep={10}
+						value={value}
+					/>
 					<ToggleControl
 						__nextHasNoMarginBottom
 						checked={isDraggingDisabled}
@@ -63,31 +82,32 @@ export default function Edit() {
 						className={`focal-point-picker-container ${isDraggingDisabled ? '' : 'disable-drag'}`}
 					>
 						{focalPoints.map((focalPoint, index) => (
-							<FocalPointPicker
-								key={index}
-								value={focalPoint}
-								onDragStart={(newFocalPoint) => updateFocalPoint(index, newFocalPoint)}
-								onDrag={(newFocalPoint) => updateFocalPoint(index, newFocalPoint)}
-								onChange={(newFocalPoint) => updateFocalPoint(index, newFocalPoint)}
-							/>
+							<div className="focal-point-picker-item" key={index}>
+								<FocalPointPicker
+									value={focalPoint}
+									onDragStart={(newFocalPoint) => updateFocalPoint(index, newFocalPoint)}
+									onDrag={(newFocalPoint) => updateFocalPoint(index, newFocalPoint)}
+									onChange={(newFocalPoint) => updateFocalPoint(index, newFocalPoint)}
+								/>
+								{focalPoints.length > 1 && (
+									<Button
+										variant="secondary"
+										size="small"
+										onClick={() => deleteFocalPoint(index)}
+									>
+										Delete
+									</Button>
+								)}
+							</div>
 						))}
-						{focalPoints.length > 1 && (
-							<Button
-								variant="secondary"
-								size="small"
-								onClick={() => setFocalPoints(focalPoints.slice(0, -1))}
-							>
-								Delete
-							</Button>
-						)}
+						<Button
+							variant="primary"
+							size="small"
+							onClick={addFocalPoint}
+						>
+							Add more
+						</Button>
 					</div>
-					<Button
-						variant="primary"
-						size="small"
-						onClick={addFocalPoint}
-					>
-						Add more
-					</Button>
 				</PanelBody>
 			</InspectorControls>
 
