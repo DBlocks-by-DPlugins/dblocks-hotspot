@@ -1,7 +1,7 @@
 import { useState, useEffect } from '@wordpress/element';
 import { Icon, trash } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
-import { useBlockProps, InspectorControls, InnerBlocks, PanelColorSettings } from '@wordpress/block-editor';
+import { useBlockProps, InspectorControls, InnerBlocks, PanelColorSettings, FontSizePicker, useSetting } from '@wordpress/block-editor';
 import {
 	PanelBody,
 	FocalPointPicker,
@@ -10,6 +10,7 @@ import {
 	__experimentalNumberControl as NumberControl,
 } from '@wordpress/components';
 import './editor.scss';
+import { getThemeSupport } from '@wordpress/hooks';
 
 export default function Edit({ attributes, setAttributes }) {
 	const {
@@ -17,11 +18,14 @@ export default function Edit({ attributes, setAttributes }) {
 		startNumber,
 		hotspotBackgroundColor,
 		hotspotTextColor,
+		hotspotFontSize,
 	} = attributes;
 
 	const [isDragging, setIsDragging] = useState(false);
 	const [draggedIndex, setDraggedIndex] = useState(null);
 	const [isDraggingDisabled, setIsDraggingDisabled] = useState(false);
+
+	const fontSizes = useSetting('typography.fontSizes'); // gets the font data from theme.json
 
 	const onChangeHotspotBackgroundColor = (color) => {
 		setAttributes({ hotspotBackgroundColor: color });
@@ -119,7 +123,20 @@ export default function Edit({ attributes, setAttributes }) {
 						</Button>
 					</div>
 				</PanelBody>
+				<PanelBody
+					className="dblocks-custom"
+					title={__('Hotspot Sizes', 'dblocks-sizes')}
+				>
+					<FontSizePicker
+						__next40pxDefaultSize
+						fallbackFontSize={parseInt(hotspotFontSize, 10) || 16}
+						fontSizes={fontSizes}
+						onChange={(newFontSize) => setAttributes({ hotspotFontSize: newFontSize })}
+						withSlider
+					/>
+				</PanelBody>
 				<PanelColorSettings
+
 					title={__("Hotspot Colors")}
 					colorSettings={[
 						{
@@ -134,7 +151,8 @@ export default function Edit({ attributes, setAttributes }) {
 						},
 					]}
 				/>
-				<PanelBody title={__('Hotspot Order', 'dp-hotspot')}>
+				<PanelBody title={__('Hotspot Order', 'dp-hotspot')} >
+
 					<NumberControl
 						__next40pxDefaultSize
 						isShiftStepEnabled={true}
@@ -143,6 +161,7 @@ export default function Edit({ attributes, setAttributes }) {
 						value={startNumber}
 						onChange={handleStartNumberChange}
 					/>
+
 				</PanelBody>
 			</InspectorControls>
 
@@ -154,10 +173,13 @@ export default function Edit({ attributes, setAttributes }) {
 						style={{
 							backgroundColor: hotspotBackgroundColor,
 							color: hotspotTextColor,
+							fontSize: hotspotFontSize,
 							left: `${focalPoint.x * 100}%`,
 							top: `${focalPoint.y * 100}%`,
 							position: 'absolute',
 							cursor: 'grab',
+							width: `calc(${hotspotFontSize} * 2)`,
+							height: `calc(${hotspotFontSize} * 2)`,
 						}}
 						onMouseDown={() => handleMouseDown(index)}
 					>

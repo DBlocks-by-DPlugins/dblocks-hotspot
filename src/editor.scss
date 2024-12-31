@@ -56,3 +56,11 @@
     margin-bottom: 0.5rem;
   }
 }
+
+.dblocks-custom {
+  [data-active-item="true"] {
+    color: white;
+    background-color: black !important;
+    font-weight: bold;
+  }
+}

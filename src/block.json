@@ -31,6 +31,10 @@
 		"hotspotTextColor": {
 			"type": "string",
 			"default": "#FFFFFF"
+		},
+		"hotspotFontSize": {
+			"type": "string",
+			"default": "16px"
 		}
 	},
 	"textdomain": "dblocks-hotspot",
