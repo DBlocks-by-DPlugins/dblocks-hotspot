@@ -67,8 +67,32 @@ export default function Edit({ attributes, setAttributes }) {
 		setFocalPoints(focalPoints.filter((_, i) => i !== index));
 	};
 
-	const handleStartNumberChange = (newValue) => {
-		setAttributes({ startNumber: newValue });
+
+	const addHotspotNumber = () => {
+		const newHotspotNumber = {
+			id: `${startNumber + hotspotNumbers.length}`,
+			content: `${startNumber + hotspotNumbers.length}`,
+			position: { x: 0, y: 0 },
+			left: 0,
+			top: 0,
+		};
+		setAttributes({
+			hotspotNumbers: [...hotspotNumbers, newHotspotNumber],
+		});
+	};
+
+
+	const handleStartNumberChange = (newStartNumber) => {
+		const updatedStartNumber = parseInt(newStartNumber, 10) || 0;
+		setAttributes({ startNumber: updatedStartNumber });
+
+		// Update existing hotspots' IDs and contents
+		const updatedHotspotNumbers = hotspotNumbers.map((hotspot, index) => ({
+			...hotspot,
+			id: `${updatedStartNumber + index}`,
+			content: `${updatedStartNumber + index}`,
+		}));
+		setAttributes({ hotspotNumbers: updatedHotspotNumbers });
 	};
 
 	return (
