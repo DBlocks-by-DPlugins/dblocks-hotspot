@@ -75,7 +75,6 @@ export default function Edit() {
 			</InspectorControls>
 
 			<div {...useBlockProps()} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp}>
-				<p>test</p>
 				{focalPoints.map((focalPoint, index) => (
 					<div
 						key={index}
