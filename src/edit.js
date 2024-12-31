@@ -1,4 +1,5 @@
-import { useState } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
+import { Icon, trash } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, InspectorControls, InnerBlocks } from '@wordpress/block-editor';
 import {
@@ -6,24 +7,31 @@ import {
 	FocalPointPicker,
 	Button,
 	ToggleControl,
-	__experimentalNumberControl as NumberControl
+	__experimentalNumberControl as NumberControl,
 } from '@wordpress/components';
 import './editor.scss';
 
-export default function Edit({ attributes: { hotspotNumbers, startNumber, hotspotBackgroundColor, hotspotTextColor }, setAttributes }) {
-	const [focalPoints, setFocalPoints] = useState([{ x: 0.5, y: 0.5 }]);
+export default function Edit({ attributes: { hotspotNumbers = [], startNumber = 1 }, setAttributes }) {
 	const [isDragging, setIsDragging] = useState(false);
 	const [draggedIndex, setDraggedIndex] = useState(null);
 	const [isDraggingDisabled, setIsDraggingDisabled] = useState(false);
 
+	// Sync the focalPoints array with hotspotNumbers in attributes
+	useEffect(() => {
+		if (hotspotNumbers.length === 0) {
+			setAttributes({ hotspotNumbers: [{ x: 0.5, y: 0.5 }] });
+		}
+	}, []); // Run once when the block is first loaded
+
 	const addFocalPoint = () => {
-		setFocalPoints([...focalPoints, { x: 0.5, y: 0.5 }]);
+		const updatedHotspotNumbers = [...hotspotNumbers, { x: 0.5, y: 0.5 }];
+		setAttributes({ hotspotNumbers: updatedHotspotNumbers });
 	};
 
 	const updateFocalPoint = (index, newFocalPoint) => {
-		const updatedFocalPoints = [...focalPoints];
-		updatedFocalPoints[index] = newFocalPoint;
-		setFocalPoints(updatedFocalPoints);
+		const updatedHotspotNumbers = [...hotspotNumbers];
+		updatedHotspotNumbers[index] = newFocalPoint;
+		setAttributes({ hotspotNumbers: updatedHotspotNumbers });
 	};
 
 	const handleMouseDown = (index) => {
@@ -34,7 +42,6 @@ export default function Edit({ attributes: { hotspotNumbers, startNumber, hotspo
 	const handleMouseMove = (event) => {
 		if (isDragging && draggedIndex !== null) {
 			const containerRect = event.currentTarget.getBoundingClientRect();
-
 			const relativeX = (event.clientX - containerRect.left) / containerRect.width;
 			const relativeY = (event.clientY - containerRect.top) / containerRect.height;
 
@@ -53,37 +60,13 @@ export default function Edit({ attributes: { hotspotNumbers, startNumber, hotspo
 	};
 
 	const deleteFocalPoint = (index) => {
-		setFocalPoints(focalPoints.filter((_, i) => i !== index));
-	};
-
-	const addHotspotNumber = () => {
-		const startingNumber = startNumber || 1;
-		setAttributes((prevAttributes) => ({
-			...prevAttributes,
-			hotspotNumbers: [...prevAttributes.hotspotNumbers, {
-				id: `${startingNumber + prevAttributes.hotspotNumbers.length}`,
-				content: `${startingNumber + prevAttributes.hotspotNumbers.length}`,
-				position: { x: 0, y: 0 },
-				left: 0,
-				top: 0,
-			}],
-		}));
+		const updatedHotspotNumbers = hotspotNumbers.filter((_, i) => i !== index);
+		setAttributes({ hotspotNumbers: updatedHotspotNumbers });
 	};
 
 	const handleStartNumberChange = (newStartNumber) => {
 		const updatedStartNumber = parseInt(newStartNumber, 10) || 1;
-		setAttributes((prevAttributes) => {
-			const updatedHotspotNumbers = prevAttributes.hotspotNumbers.map((hotspot, index) => ({
-				...hotspot,
-				id: `${updatedStartNumber + index}`,
-				content: `${updatedStartNumber + index}`,
-			}));
-			return {
-				...prevAttributes,
-				startNumber: updatedStartNumber,
-				hotspotNumbers: updatedHotspotNumbers,
-			};
-		});
+		setAttributes({ startNumber: updatedStartNumber });
 	};
 
 	return (
@@ -96,8 +79,8 @@ export default function Edit({ attributes: { hotspotNumbers, startNumber, hotspo
 						label="Enable Focal Point Preview"
 						onChange={() => setIsDraggingDisabled(!isDraggingDisabled)}
 					/>
-					<div className={`focal-point-picker-container ${isDraggingDisabled ? '' : 'disable-drag'}`}>
-						{focalPoints.map((focalPoint, index) => (
+					<div className={`focal-point-picker-container ${isDraggingDisabled ? '' : 'disable-focal-preview'}`}>
+						{hotspotNumbers.map((focalPoint, index) => (
 							<div className="focal-point-picker-item" key={index}>
 								<FocalPointPicker
 									value={focalPoint}
@@ -105,39 +88,34 @@ export default function Edit({ attributes: { hotspotNumbers, startNumber, hotspo
 									onDrag={(newFocalPoint) => updateFocalPoint(index, newFocalPoint)}
 									onChange={(newFocalPoint) => updateFocalPoint(index, newFocalPoint)}
 								/>
-								{focalPoints.length > 1 && (
+								{hotspotNumbers.length > 1 && (
 									<Button
 										variant="secondary"
-										size="small"
+										icon={trash}
 										onClick={() => deleteFocalPoint(index)}
-									>
-										Delete
-									</Button>
+									/>
 								)}
 							</div>
 						))}
-						<Button
-							variant="primary"
-							onClick={addFocalPoint}
-						>
+						<Button variant="primary" onClick={addFocalPoint}>
 							Add more
 						</Button>
 					</div>
 				</PanelBody>
-				<PanelBody title={__("Hotspot order", "dp-hotspot")}>
+				<PanelBody title={__('Hotspot Order', 'dp-hotspot')}>
 					<NumberControl
 						__next40pxDefaultSize
 						isShiftStepEnabled={true}
 						shiftStep={10}
-						label={__("Starting Number", "dp-hotspot")}
-						value={startNumber || 1}
+						label={__('Starting Number', 'dp-hotspot')}
+						value={startNumber}
 						onChange={handleStartNumberChange}
 					/>
 				</PanelBody>
 			</InspectorControls>
 
 			<div {...useBlockProps()} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp}>
-				{focalPoints.map((focalPoint, index) => (
+				{hotspotNumbers.map((focalPoint, index) => (
 					<div
 						key={index}
 						className="drag-point"
@@ -152,11 +130,7 @@ export default function Edit({ attributes: { hotspotNumbers, startNumber, hotspo
 						{startNumber + index}
 					</div>
 				))}
-				<InnerBlocks
-					template={[
-						['core/image']
-					]}
-				/>
+				<InnerBlocks template={[['core/image']]} />
 			</div>
 		</>
 	);
