@@ -1,13 +1,14 @@
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, FocalPointPicker, Button } from '@wordpress/components';
+import { PanelBody, FocalPointPicker, Button, ToggleControl } from '@wordpress/components';
 import './editor.scss';
 
 export default function Edit() {
 	const [focalPoints, setFocalPoints] = useState([{ x: 0.5, y: 0.5 }]);
 	const [isDragging, setIsDragging] = useState(false);
 	const [draggedIndex, setDraggedIndex] = useState(null);
+	const [isDraggingDisabled, setIsDraggingDisabled] = useState(false);
 
 	const addFocalPoint = () => {
 		setFocalPoints([...focalPoints, { x: 0.5, y: 0.5 }]);
@@ -52,7 +53,15 @@ export default function Edit() {
 		<>
 			<InspectorControls>
 				<PanelBody title={__('Settings', 'focal')}>
-					<div className="focal-point-picker-container">
+					<ToggleControl
+						__nextHasNoMarginBottom
+						checked={isDraggingDisabled}
+						label="Enable Focal Point Preview"
+						onChange={() => setIsDraggingDisabled(!isDraggingDisabled)}
+					/>
+					<div
+						className={`focal-point-picker-container ${isDraggingDisabled ? '' : 'disable-drag'}`}
+					>
 						{focalPoints.map((focalPoint, index) => (
 							<FocalPointPicker
 								key={index}

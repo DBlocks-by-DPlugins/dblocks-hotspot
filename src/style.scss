@@ -14,6 +14,16 @@
   padding: 2px;
 }
 
+.disable-drag .components-focal-point-picker-wrapper {
+  display: none !important;
+}
+
+.focal-point-picker-container {
+  .components-base-control {
+    margin-bottom: 0;
+  }
+}
+
 .drag-point {
   position: absolute;
   width: 2rem;
