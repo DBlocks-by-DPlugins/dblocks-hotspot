@@ -1,7 +1,7 @@
 import { useState, useEffect } from '@wordpress/element';
 import { Icon, trash } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
-import { useBlockProps, InspectorControls, InnerBlocks } from '@wordpress/block-editor';
+import { useBlockProps, InspectorControls, InnerBlocks, PanelColorSettings } from '@wordpress/block-editor';
 import {
 	PanelBody,
 	FocalPointPicker,
@@ -11,10 +11,25 @@ import {
 } from '@wordpress/components';
 import './editor.scss';
 
-export default function Edit({ attributes: { hotspotNumbers = [], startNumber = 1 }, setAttributes }) {
+export default function Edit({ attributes, setAttributes }) {
+	const {
+		hotspotNumbers,
+		startNumber,
+		hotspotBackgroundColor,
+		hotspotTextColor,
+	} = attributes;
+
 	const [isDragging, setIsDragging] = useState(false);
 	const [draggedIndex, setDraggedIndex] = useState(null);
 	const [isDraggingDisabled, setIsDraggingDisabled] = useState(false);
+
+	const onChangeHotspotBackgroundColor = (color) => {
+		setAttributes({ hotspotBackgroundColor: color });
+	};
+
+	const onChangeHotspotTextColor = (color) => {
+		setAttributes({ hotspotTextColor: color });
+	};
 
 	// Sync the focalPoints array with hotspotNumbers in attributes
 	useEffect(() => {
@@ -104,6 +119,21 @@ export default function Edit({ attributes: { hotspotNumbers = [], startNumber = 
 						</Button>
 					</div>
 				</PanelBody>
+				<PanelColorSettings
+					title={__("Hotspot Colors")}
+					colorSettings={[
+						{
+							value: hotspotBackgroundColor,
+							onChange: onChangeHotspotBackgroundColor,
+							label: __("Background Color"),
+						},
+						{
+							value: hotspotTextColor,
+							onChange: onChangeHotspotTextColor,
+							label: __("Text Color"),
+						},
+					]}
+				/>
 				<PanelBody title={__('Hotspot Order', 'dp-hotspot')}>
 					<NumberControl
 						__next40pxDefaultSize
@@ -122,6 +152,8 @@ export default function Edit({ attributes: { hotspotNumbers = [], startNumber = 
 						key={index}
 						className="drag-point"
 						style={{
+							backgroundColor: hotspotBackgroundColor,
+							color: hotspotTextColor,
 							left: `${focalPoint.x * 100}%`,
 							top: `${focalPoint.y * 100}%`,
 							position: 'absolute',
