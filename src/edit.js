@@ -15,7 +15,6 @@ export default function Edit({ attributes: { hotspotNumbers, startNumber, hotspo
 	const [isDragging, setIsDragging] = useState(false);
 	const [draggedIndex, setDraggedIndex] = useState(null);
 	const [isDraggingDisabled, setIsDraggingDisabled] = useState(false);
-	const [value, setValue] = useState('');
 
 	const addFocalPoint = () => {
 		setFocalPoints([...focalPoints, { x: 0.5, y: 0.5 }]);
@@ -35,13 +34,10 @@ export default function Edit({ attributes: { hotspotNumbers, startNumber, hotspo
 	const handleMouseMove = (event) => {
 		if (isDragging && draggedIndex !== null) {
 			const containerRect = event.currentTarget.getBoundingClientRect();
-			const { clientX, clientY } = event;
 
-			// Calculate relative coordinates within the container
-			const relativeX = (clientX - containerRect.left) / containerRect.width;
-			const relativeY = (clientY - containerRect.top) / containerRect.height;
+			const relativeX = (event.clientX - containerRect.left) / containerRect.width;
+			const relativeY = (event.clientY - containerRect.top) / containerRect.height;
 
-			// Clamp values between 0 and 1
 			const focalPoint = {
 				x: Math.max(0, Math.min(1, relativeX)),
 				y: Math.max(0, Math.min(1, relativeY)),
@@ -60,24 +56,22 @@ export default function Edit({ attributes: { hotspotNumbers, startNumber, hotspo
 		setFocalPoints(focalPoints.filter((_, i) => i !== index));
 	};
 
-
 	const addHotspotNumber = () => {
-		const newHotspotNumber = {
-			id: `${startNumber + hotspotNumbers.length}`,
-			content: `${startNumber + hotspotNumbers.length}`,
-			position: { x: 0, y: 0 },
-			left: 0,
-			top: 0,
-		};
+		const startingNumber = startNumber || 1;
 		setAttributes((prevAttributes) => ({
 			...prevAttributes,
-			hotspotNumbers: [...prevAttributes.hotspotNumbers, newHotspotNumber],
+			hotspotNumbers: [...prevAttributes.hotspotNumbers, {
+				id: `${startingNumber + prevAttributes.hotspotNumbers.length}`,
+				content: `${startingNumber + prevAttributes.hotspotNumbers.length}`,
+				position: { x: 0, y: 0 },
+				left: 0,
+				top: 0,
+			}],
 		}));
 	};
 
-
 	const handleStartNumberChange = (newStartNumber) => {
-		const updatedStartNumber = parseInt(newStartNumber, 10) || 0;
+		const updatedStartNumber = parseInt(newStartNumber, 10) || 1;
 		setAttributes((prevAttributes) => {
 			const updatedHotspotNumbers = prevAttributes.hotspotNumbers.map((hotspot, index) => ({
 				...hotspot,
@@ -102,9 +96,7 @@ export default function Edit({ attributes: { hotspotNumbers, startNumber, hotspo
 						label="Enable Focal Point Preview"
 						onChange={() => setIsDraggingDisabled(!isDraggingDisabled)}
 					/>
-					<div
-						className={`focal-point-picker-container ${isDraggingDisabled ? '' : 'disable-drag'}`}
-					>
+					<div className={`focal-point-picker-container ${isDraggingDisabled ? '' : 'disable-drag'}`}>
 						{focalPoints.map((focalPoint, index) => (
 							<div className="focal-point-picker-item" key={index}>
 								<FocalPointPicker
@@ -126,7 +118,6 @@ export default function Edit({ attributes: { hotspotNumbers, startNumber, hotspo
 						))}
 						<Button
 							variant="primary"
-							size="small"
 							onClick={addFocalPoint}
 						>
 							Add more
@@ -139,7 +130,7 @@ export default function Edit({ attributes: { hotspotNumbers, startNumber, hotspo
 						isShiftStepEnabled={true}
 						shiftStep={10}
 						label={__("Starting Number", "dp-hotspot")}
-						value={startNumber}
+						value={startNumber || 1}
 						onChange={handleStartNumberChange}
 					/>
 				</PanelBody>
@@ -157,9 +148,15 @@ export default function Edit({ attributes: { hotspotNumbers, startNumber, hotspo
 							cursor: 'grab',
 						}}
 						onMouseDown={() => handleMouseDown(index)}
-					></div>
+					>
+						{startNumber + index}
+					</div>
 				))}
-				<InnerBlocks />
+				<InnerBlocks
+					template={[
+						['core/image']
+					]}
+				/>
 			</div>
 		</>
 	);

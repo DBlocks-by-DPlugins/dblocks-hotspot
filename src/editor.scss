@@ -4,6 +4,37 @@
  * Replace them with your own styles or remove the file completely.
  */
 
-.wp-block-create-block-focal {
-	border: 1px dotted #f00;
+.wp-block-dblocks-hotspot {
+  border: 1px dotted #f00;
+
+  .block-editor-block-list__layout {
+    * {
+      margin: 0;
+    }
+  }
+}
+
+.disable-drag .components-focal-point-picker-wrapper {
+  display: none !important;
+}
+
+.focal-point-picker-container {
+  .components-base-control {
+    margin-bottom: 0;
+  }
+}
+
+.drag-point {
+  position: absolute;
+  z-index: 1000;
+  width: 4rem;
+  height: 4rem;
+  background-color: blue;
+  color: #fff;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
 }

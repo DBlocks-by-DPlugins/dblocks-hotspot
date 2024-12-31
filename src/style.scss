@@ -6,29 +6,7 @@
  */
 
 .wp-block-dblocks-hotspot {
-  background-color: #ec460a;
+  background-color: olive;
   position: relative;
-  aspect-ratio: 16/9;
-  width: 100%;
-  color: #fff;
   padding: 2px;
-}
-
-.disable-drag .components-focal-point-picker-wrapper {
-  display: none !important;
-}
-
-.focal-point-picker-container {
-  .components-base-control {
-    margin-bottom: 0;
-  }
-}
-
-.drag-point {
-  position: absolute;
-  width: 2rem;
-  height: 2rem;
-  background-color: blue;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
 }
