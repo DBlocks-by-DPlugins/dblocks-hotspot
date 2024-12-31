@@ -29,9 +29,11 @@ export default function Edit({ attributes: { hotspotNumbers = [], startNumber = 
 	};
 
 	const updateFocalPoint = (index, newFocalPoint) => {
-		const updatedHotspotNumbers = [...hotspotNumbers];
-		updatedHotspotNumbers[index] = newFocalPoint;
-		setAttributes({ hotspotNumbers: updatedHotspotNumbers });
+		setAttributes({ hotspotNumbers: hotspotNumbers.map((point, i) => i === index ? newFocalPoint : point) });
+	};
+
+	const handleDrag = (index, newFocalPoint) => {
+		updateFocalPoint(index, newFocalPoint);
 	};
 
 	const handleMouseDown = (index) => {
@@ -84,9 +86,9 @@ export default function Edit({ attributes: { hotspotNumbers = [], startNumber = 
 							<div className="focal-point-picker-item" key={index}>
 								<FocalPointPicker
 									value={focalPoint}
-									onDragStart={(newFocalPoint) => updateFocalPoint(index, newFocalPoint)}
-									onDrag={(newFocalPoint) => updateFocalPoint(index, newFocalPoint)}
-									onChange={(newFocalPoint) => updateFocalPoint(index, newFocalPoint)}
+									onDragStart={(newFocalPoint) => handleDrag(index, newFocalPoint)}
+									onDrag={(newFocalPoint) => handleDrag(index, newFocalPoint)}
+									onChange={(newFocalPoint) => handleDrag(index, newFocalPoint)}
 								/>
 								{hotspotNumbers.length > 1 && (
 									<Button
