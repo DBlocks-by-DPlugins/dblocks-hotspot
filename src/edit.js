@@ -26,11 +26,19 @@ export default function Edit() {
 
 	const handleMouseMove = (event) => {
 		if (isDragging && draggedIndex !== null) {
+			const containerRect = event.currentTarget.getBoundingClientRect();
 			const { clientX, clientY } = event;
+
+			// Calculate relative coordinates within the container
+			const relativeX = (clientX - containerRect.left) / containerRect.width;
+			const relativeY = (clientY - containerRect.top) / containerRect.height;
+
+			// Clamp values between 0 and 1
 			const focalPoint = {
-				x: clientX / window.innerWidth,
-				y: clientY / window.innerHeight,
+				x: Math.max(0, Math.min(1, relativeX)),
+				y: Math.max(0, Math.min(1, relativeY)),
 			};
+
 			updateFocalPoint(draggedIndex, focalPoint);
 		}
 	};
