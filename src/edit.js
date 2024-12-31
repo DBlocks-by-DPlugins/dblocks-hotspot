@@ -10,19 +10,12 @@ import {
 } from '@wordpress/components';
 import './editor.scss';
 
-export default function Edit({ attributes, setAttributes }) {
+export default function Edit({ attributes: { hotspotNumbers, startNumber, hotspotBackgroundColor, hotspotTextColor }, setAttributes }) {
 	const [focalPoints, setFocalPoints] = useState([{ x: 0.5, y: 0.5 }]);
 	const [isDragging, setIsDragging] = useState(false);
 	const [draggedIndex, setDraggedIndex] = useState(null);
 	const [isDraggingDisabled, setIsDraggingDisabled] = useState(false);
 	const [value, setValue] = useState('');
-
-	const {
-		hotspotNumbers,
-		startNumber,
-		hotspotBackgroundColor, // Add this line
-		hotspotTextColor, // Add this line
-	} = attributes;
 
 	const addFocalPoint = () => {
 		setFocalPoints([...focalPoints, { x: 0.5, y: 0.5 }]);
@@ -76,23 +69,27 @@ export default function Edit({ attributes, setAttributes }) {
 			left: 0,
 			top: 0,
 		};
-		setAttributes({
-			hotspotNumbers: [...hotspotNumbers, newHotspotNumber],
-		});
+		setAttributes((prevAttributes) => ({
+			...prevAttributes,
+			hotspotNumbers: [...prevAttributes.hotspotNumbers, newHotspotNumber],
+		}));
 	};
 
 
 	const handleStartNumberChange = (newStartNumber) => {
 		const updatedStartNumber = parseInt(newStartNumber, 10) || 0;
-		setAttributes({ startNumber: updatedStartNumber });
-
-		// Update existing hotspots' IDs and contents
-		const updatedHotspotNumbers = hotspotNumbers.map((hotspot, index) => ({
-			...hotspot,
-			id: `${updatedStartNumber + index}`,
-			content: `${updatedStartNumber + index}`,
-		}));
-		setAttributes({ hotspotNumbers: updatedHotspotNumbers });
+		setAttributes((prevAttributes) => {
+			const updatedHotspotNumbers = prevAttributes.hotspotNumbers.map((hotspot, index) => ({
+				...hotspot,
+				id: `${updatedStartNumber + index}`,
+				content: `${updatedStartNumber + index}`,
+			}));
+			return {
+				...prevAttributes,
+				startNumber: updatedStartNumber,
+				hotspotNumbers: updatedHotspotNumbers,
+			};
+		});
 	};
 
 	return (
