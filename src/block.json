@@ -1,17 +1,39 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "create-block/focal",
+	"name": "dblocks/hotspot",
 	"version": "0.1.0",
-	"title": "Focal",
+	"title": "Dblocks Hotspot",
 	"category": "widgets",
-	"icon": "smiley",
+	"icon": "marker",
 	"description": "Example block scaffolded with Create Block tool.",
 	"example": {},
 	"supports": {
-		"html": false
+		"html": true,
+		"align": [
+			"wide",
+			"full"
+		]
 	},
-	"textdomain": "focal",
+	"attributes": {
+		"hotspotNumbers": {
+			"type": "array",
+			"default": []
+		},
+		"startNumber": {
+			"type": "number",
+			"default": 1
+		},
+		"hotspotBackgroundColor": {
+			"type": "string",
+			"default": "#8d57fd"
+		},
+		"hotspotTextColor": {
+			"type": "string",
+			"default": "#FFFFFF"
+		}
+	},
+	"textdomain": "dblocks-hotspot",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",

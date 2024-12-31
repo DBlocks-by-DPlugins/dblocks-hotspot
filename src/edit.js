@@ -10,12 +10,19 @@ import {
 } from '@wordpress/components';
 import './editor.scss';
 
-export default function Edit() {
+export default function Edit({ attributes, setAttributes }) {
 	const [focalPoints, setFocalPoints] = useState([{ x: 0.5, y: 0.5 }]);
 	const [isDragging, setIsDragging] = useState(false);
 	const [draggedIndex, setDraggedIndex] = useState(null);
 	const [isDraggingDisabled, setIsDraggingDisabled] = useState(false);
 	const [value, setValue] = useState('');
+
+	const {
+		hotspotNumbers,
+		startNumber,
+		hotspotBackgroundColor, // Add this line
+		hotspotTextColor, // Add this line
+	} = attributes;
 
 	const addFocalPoint = () => {
 		setFocalPoints([...focalPoints, { x: 0.5, y: 0.5 }]);
@@ -60,18 +67,14 @@ export default function Edit() {
 		setFocalPoints(focalPoints.filter((_, i) => i !== index));
 	};
 
+	const handleStartNumberChange = (newValue) => {
+		setAttributes({ startNumber: newValue });
+	};
+
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={__('Settings', 'focal')}>
-					<NumberControl
-						__next40pxDefaultSize
-						label="Starting number"
-						isShiftStepEnabled={true}
-						onChange={setValue}
-						shiftStep={10}
-						value={value}
-					/>
+				<PanelBody title={__('Hotspot Settings', 'dblocks-hotspot')}>
 					<ToggleControl
 						__nextHasNoMarginBottom
 						checked={isDraggingDisabled}
@@ -108,6 +111,16 @@ export default function Edit() {
 							Add more
 						</Button>
 					</div>
+				</PanelBody>
+				<PanelBody title={__("Hotspot order", "dp-hotspot")}>
+					<NumberControl
+						__next40pxDefaultSize
+						isShiftStepEnabled={true}
+						shiftStep={10}
+						label={__("Starting Number", "dp-hotspot")}
+						value={startNumber}
+						onChange={handleStartNumberChange}
+					/>
 				</PanelBody>
 			</InspectorControls>
 
