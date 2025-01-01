@@ -3,13 +3,15 @@
 	"apiVersion": 3,
 	"name": "dblocks/hotspot",
 	"version": "0.1.0",
-	"title": "Dblocks Hotspot",
+	"title": "DBlocks Hotspot",
 	"category": "widgets",
 	"icon": "marker",
 	"description": "Example block scaffolded with Create Block tool.",
 	"example": {},
 	"supports": {
 		"html": true,
+		"color": true,
+		"typography": true,
 		"align": [
 			"wide",
 			"full"
