@@ -10,6 +10,7 @@ import {
 	__experimentalNumberControl as NumberControl,
 } from '@wordpress/components';
 import './editor.scss';
+import { useSelect } from '@wordpress/data';
 
 export default function Edit({ attributes, setAttributes }) {
 	const {
@@ -20,6 +21,13 @@ export default function Edit({ attributes, setAttributes }) {
 	const [isDragging, setIsDragging] = useState(false);
 	const [draggedIndex, setDraggedIndex] = useState(null);
 	const [isDraggingDisabled, setIsDraggingDisabled] = useState(false);
+
+	// Sync the focalPoints array with hotspotNumbers in attributes
+	useEffect(() => {
+		if (hotspotNumbers.length === 0) {
+			setAttributes({ hotspotNumbers: [{ x: 0.5, y: 0.5 }] });
+		}
+	}, []); // Run once when the block is first loaded
 
 	const addFocalPoint = () => {
 		const updatedHotspotNumbers = [...hotspotNumbers, { x: 0.5, y: 0.5 }];
@@ -69,13 +77,6 @@ export default function Edit({ attributes, setAttributes }) {
 		setAttributes({ startNumber: updatedStartNumber });
 	};
 
-	// Sync the focalPoints array with hotspotNumbers in attributes
-	useEffect(() => {
-		if (hotspotNumbers.length === 0) {
-			setAttributes({ hotspotNumbers: [{ x: 0.5, y: 0.5 }] });
-		}
-	}, []); // Run once when the block is first loaded
-
 	return (
 		<>
 			<InspectorControls>
@@ -121,22 +122,22 @@ export default function Edit({ attributes, setAttributes }) {
 				</PanelBody>
 			</InspectorControls>
 
-			<div {...useBlockProps()} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp}>
+			<div {...blockProps} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp}>
 				{hotspotNumbers.map((focalPoint, index) => (
 					<div
 						key={index}
 						className="drag-point"
 						style={{
-							backgroundColor: useBlockProps().style?.backgroundColor,
-							color: useBlockProps().style?.color,
-							fontSize: useBlockProps().style?.fontSize,
+							backgroundColor: blockProps.style?.backgroundColor,
+							color: blockProps.style?.color,
+							fontSize: blockProps.style?.fontSize,
 							left: `${focalPoint.x * 100}%`,
 							top: `${focalPoint.y * 100}%`,
-							width: `calc(${useBlockProps().style?.fontSize} * 2)`,
-							height: `calc(${useBlockProps().style?.fontSize} * 2)`,
-							borderRadius: useBlockProps().style?.borderRadius,
-							borderColor: useBlockProps().style?.borderColor,
-							borderWidth: useBlockProps().style?.borderWidth
+							width: `calc(${blockProps.style?.fontSize} * 2)`,
+							height: `calc(${blockProps.style?.fontSize} * 2)`,
+							borderRadius: blockProps.style?.borderRadius,
+							borderColor: blockProps.style?.borderColor,
+							borderWidth: blockProps.style?.borderWidth
 						}}
 						onMouseDown={() => handleMouseDown(index)}
 					>
