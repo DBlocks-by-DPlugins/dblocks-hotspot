@@ -10,24 +10,19 @@ import {
 	__experimentalNumberControl as NumberControl,
 } from '@wordpress/components';
 import './editor.scss';
-import { useSelect } from '@wordpress/data';
 
 export default function Edit({ attributes, setAttributes }) {
+
 	const {
 		hotspotNumbers,
 		startNumber,
 	} = attributes;
 
+	const blockProps = useBlockProps();
+
 	const [isDragging, setIsDragging] = useState(false);
 	const [draggedIndex, setDraggedIndex] = useState(null);
 	const [isDraggingDisabled, setIsDraggingDisabled] = useState(false);
-
-	// Sync the focalPoints array with hotspotNumbers in attributes
-	useEffect(() => {
-		if (hotspotNumbers.length === 0) {
-			setAttributes({ hotspotNumbers: [{ x: 0.5, y: 0.5 }] });
-		}
-	}, []); // Run once when the block is first loaded
 
 	const addFocalPoint = () => {
 		const updatedHotspotNumbers = [...hotspotNumbers, { x: 0.5, y: 0.5 }];
