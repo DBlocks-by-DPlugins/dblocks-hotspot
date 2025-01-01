@@ -17,6 +17,7 @@
 		"@wordpress/scripts": "^30.7.0"
 	},
 	"dependencies": {
+		"@wordpress/hooks": "^4.14.0",
 		"@wordpress/icons": "^10.14.0"
 	}
 }

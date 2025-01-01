@@ -11,20 +11,20 @@
 	"supports": {
 		"html": true,
 		"color": true,
-		"border": {
+		"__experimentalBorder": {
+			"__experimentalSkipSerialization": true,
+			"radius": true,
+			"width": true,
 			"color": true,
 			"style": true,
-			"width": true,
-			"radius": true,
-			"default": {
-				"color": false,
-				"style": false,
-				"width": false,
-				"radius": false
+			"__experimentalDefaultControls": {
+				"radius": true
 			}
 		},
 		"customRadius": true,
-		"fontSize": true,
+		"typography": {
+			"fontSize": true
+		},
 		"align": [
 			"wide",
 			"full"
@@ -39,18 +39,21 @@
 			"type": "number",
 			"default": 1
 		},
-		"hotspotBackgroundColor": {
+		"color": {
 			"type": "string",
-			"default": "#8d57fd"
+			"default": "red"
 		},
-		"hotspotTextColor": {
+		"background": {
 			"type": "string",
-			"default": "#FFFFFF"
-		},
-		"hotspotFontSize": {
-			"type": "string",
-			"default": "16px"
+			"default": "blue"
 		}
+	},
+	"selectors": {
+		"border": ".wp-block-dblocks-hotspot .drag-point",
+		"borderRadius": ".wp-block-dblocks-hotspot .drag-point",
+		"backgroundColor": ".wp-block-dblocks-hotspot .drag-point",
+		"color": ".wp-block-dblocks-hotspot .drag-point",
+		"fontSize": ".wp-block-dblocks-hotspot .drag-point"
 	},
 	"textdomain": "dblocks-hotspot",
 	"editorScript": "file:./index.js",

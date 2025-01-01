@@ -10,31 +10,17 @@ import {
 	__experimentalNumberControl as NumberControl,
 } from '@wordpress/components';
 import './editor.scss';
+import { useSelect } from '@wordpress/data';
 
 export default function Edit({ attributes, setAttributes }) {
-	const blockProps = useBlockProps();
-
 	const {
 		hotspotNumbers,
 		startNumber,
-		hotspotBackgroundColor,
-		hotspotTextColor,
-		hotspotFontSize,
 	} = attributes;
 
 	const [isDragging, setIsDragging] = useState(false);
 	const [draggedIndex, setDraggedIndex] = useState(null);
 	const [isDraggingDisabled, setIsDraggingDisabled] = useState(false);
-
-	const fontSizes = useSetting('typography.fontSizes'); // gets the font data from theme.json
-
-	const onChangeHotspotBackgroundColor = (color) => {
-		setAttributes({ hotspotBackgroundColor: color });
-	};
-
-	const onChangeHotspotTextColor = (color) => {
-		setAttributes({ hotspotTextColor: color });
-	};
 
 	// Sync the focalPoints array with hotspotNumbers in attributes
 	useEffect(() => {
@@ -94,7 +80,7 @@ export default function Edit({ attributes, setAttributes }) {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={__('Hotspot Settings', 'dblocks-hotspot')}>
+				<PanelBody title={__('Hotspots Positions', 'dblocks-hotspot')}>
 					<ToggleControl
 						__nextHasNoMarginBottom
 						checked={isDraggingDisabled}
@@ -124,36 +110,7 @@ export default function Edit({ attributes, setAttributes }) {
 						</Button>
 					</div>
 				</PanelBody>
-				<PanelBody
-					className="dblocks-custom"
-					title={__('Hotspot Sizes', 'dblocks-sizes')}
-				>
-					<FontSizePicker
-						__next40pxDefaultSize
-						fallbackFontSize={parseInt(hotspotFontSize, 10) || 16}
-						fontSizes={fontSizes}
-						onChange={(newFontSize) => setAttributes({ hotspotFontSize: newFontSize })}
-						withSlider
-					/>
-				</PanelBody>
-				<PanelColorSettings
-
-					title={__("Hotspot Colors")}
-					colorSettings={[
-						{
-							value: hotspotBackgroundColor,
-							onChange: onChangeHotspotBackgroundColor,
-							label: __("Background Color"),
-						},
-						{
-							value: hotspotTextColor,
-							onChange: onChangeHotspotTextColor,
-							label: __("Text Color"),
-						},
-					]}
-				/>
-				<PanelBody title={__('Hotspot Order', 'dp-hotspot')} >
-
+				<PanelBody title={__('Hotspots Order', 'dblocks-hotspot')}>
 					<NumberControl
 						__next40pxDefaultSize
 						isShiftStepEnabled={true}
@@ -162,7 +119,6 @@ export default function Edit({ attributes, setAttributes }) {
 						value={startNumber}
 						onChange={handleStartNumberChange}
 					/>
-
 				</PanelBody>
 			</InspectorControls>
 
@@ -172,16 +128,16 @@ export default function Edit({ attributes, setAttributes }) {
 						key={index}
 						className="drag-point"
 						style={{
-							// Apply the background color to the drag-point only
-							backgroundColor: 'var(--wp--preset--color--background)',
-							color: 'var(--wp--preset--color)',
-							fontSize: hotspotFontSize,
+							backgroundColor: blockProps.style?.backgroundColor,
+							color: blockProps.style?.color,
+							fontSize: blockProps.style?.fontSize,
 							left: `${focalPoint.x * 100}%`,
 							top: `${focalPoint.y * 100}%`,
-							position: 'absolute',
-							cursor: 'grab',
-							width: `calc(${hotspotFontSize} * 2)`,
-							height: `calc(${hotspotFontSize} * 2)`,
+							width: `calc(${blockProps.style?.fontSize} * 2)`,
+							height: `calc(${blockProps.style?.fontSize} * 2)`,
+							borderRadius: blockProps.style?.borderRadius,
+							borderColor: blockProps.style?.borderColor,
+							borderWidth: blockProps.style?.borderWidth
 						}}
 						onMouseDown={() => handleMouseDown(index)}
 					>
