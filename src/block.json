@@ -11,7 +11,20 @@
 	"supports": {
 		"html": true,
 		"color": true,
-		"typography": true,
+		"border": {
+			"color": true,
+			"style": true,
+			"width": true,
+			"radius": true,
+			"default": {
+				"color": false,
+				"style": false,
+				"width": false,
+				"radius": false
+			}
+		},
+		"customRadius": true,
+		"fontSize": true,
 		"align": [
 			"wide",
 			"full"
