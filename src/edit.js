@@ -12,6 +12,8 @@ import {
 import './editor.scss';
 
 export default function Edit({ attributes, setAttributes }) {
+	const blockProps = useBlockProps();
+
 	const {
 		hotspotNumbers,
 		startNumber,
@@ -164,14 +166,15 @@ export default function Edit({ attributes, setAttributes }) {
 				</PanelBody>
 			</InspectorControls>
 
-			<div {...useBlockProps()} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp}>
+			<div {...blockProps} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp}>
 				{hotspotNumbers.map((focalPoint, index) => (
 					<div
 						key={index}
 						className="drag-point"
 						style={{
-							backgroundColor: hotspotBackgroundColor,
-							color: hotspotTextColor,
+							// Apply the background color to the drag-point only
+							backgroundColor: 'var(--wp--preset--color--background)',
+							color: 'var(--wp--preset--color)',
 							fontSize: hotspotFontSize,
 							left: `${focalPoint.x * 100}%`,
 							top: `${focalPoint.y * 100}%`,

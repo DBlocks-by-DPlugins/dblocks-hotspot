@@ -19,8 +19,8 @@ export default function save({ attributes }) {
 					style={{
 						left: `${focalPoint.x * 100}%`,
 						top: `${focalPoint.y * 100}%`,
-						backgroundColor: hotspotBackgroundColor,
-						color: hotspotTextColor,
+						backgroundColor: 'var(--wp--preset--color--background)',
+						color: 'var(--wp--preset--color)',
 						width: `calc(${hotspotFontSize} * 2)`,
 						height: `calc(${hotspotFontSize} * 2)`,
 						fontSize: hotspotFontSize,
