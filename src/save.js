@@ -6,6 +6,7 @@ export default function save({ attributes }) {
 		hotspotBackgroundColor,
 		hotspotTextColor,
 		startNumber,
+		hotspotFontSize,
 	} = attributes;
 
 	return (
@@ -19,7 +20,10 @@ export default function save({ attributes }) {
 						left: `${focalPoint.x * 100}%`,
 						top: `${focalPoint.y * 100}%`,
 						backgroundColor: hotspotBackgroundColor,
-						color: hotspotTextColor
+						color: hotspotTextColor,
+						width: `calc(${hotspotFontSize} * 2)`,
+						height: `calc(${hotspotFontSize} * 2)`,
+						fontSize: hotspotFontSize,
 					}}
 				>
 					{startNumber + index}
