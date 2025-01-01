@@ -1,5 +1,5 @@
 import { useState, useEffect } from '@wordpress/element';
-import { Icon, trash } from '@wordpress/icons';
+import { trash } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, InspectorControls, InnerBlocks, PanelColorSettings, FontSizePicker, useSetting } from '@wordpress/block-editor';
 import {
@@ -10,7 +10,6 @@ import {
 	__experimentalNumberControl as NumberControl,
 } from '@wordpress/components';
 import './editor.scss';
-import { getThemeSupport } from '@wordpress/hooks';
 
 export default function Edit({ attributes, setAttributes }) {
 	const {
