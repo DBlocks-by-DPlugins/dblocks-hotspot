@@ -10,9 +10,12 @@ import {
 	__experimentalNumberControl as NumberControl,
 } from '@wordpress/components';
 import './editor.scss';
-import { useSelect } from '@wordpress/data';
 
 export default function Edit({ attributes, setAttributes }) {
+
+	const blockProps = useBlockProps();
+
+
 	const {
 		hotspotNumbers,
 		startNumber,
@@ -77,6 +80,8 @@ export default function Edit({ attributes, setAttributes }) {
 		setAttributes({ startNumber: updatedStartNumber });
 	};
 
+	console.log({ ...blockProps });
+
 	return (
 		<>
 			<InspectorControls>
@@ -122,9 +127,17 @@ export default function Edit({ attributes, setAttributes }) {
 				</PanelBody>
 			</InspectorControls>
 
-			<div {...blockProps} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp}>
+			<div
+				{...blockProps}
+				style={{
+					color: blockProps.style?.color,
+					fontSize: blockProps.style?.fontSize,
+				}}
+				onMouseMove={handleMouseMove}
+				onMouseUp={handleMouseUp}
+			>
 				{hotspotNumbers.map((focalPoint, index) => (
-					<div
+					<span
 						key={index}
 						className="drag-point"
 						style={{
@@ -142,10 +155,13 @@ export default function Edit({ attributes, setAttributes }) {
 						onMouseDown={() => handleMouseDown(index)}
 					>
 						{startNumber + index}
-					</div>
+					</span>
 				))}
 				<InnerBlocks template={[['core/image']]} />
 			</div>
 		</>
 	);
+
+
 }
+

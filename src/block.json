@@ -11,14 +11,12 @@
 	"supports": {
 		"html": true,
 		"color": true,
-		"__experimentalBorder": {
-			"__experimentalSkipSerialization": true,
-			"radius": true,
-			"width": true,
+		"border": {
 			"color": true,
-			"style": true,
-			"__experimentalDefaultControls": {
-				"radius": true
+			"width": true,
+			"radius": true,
+			"default": {
+				"radius": false
 			}
 		},
 		"customRadius": true,
@@ -38,22 +36,14 @@
 		"startNumber": {
 			"type": "number",
 			"default": 1
-		},
-		"color": {
-			"type": "string",
-			"default": "red"
-		},
-		"background": {
-			"type": "string",
-			"default": "blue"
 		}
 	},
 	"selectors": {
-		"border": ".wp-block-dblocks-hotspot .drag-point",
-		"borderRadius": ".wp-block-dblocks-hotspot .drag-point",
-		"backgroundColor": ".wp-block-dblocks-hotspot .drag-point",
-		"color": ".wp-block-dblocks-hotspot .drag-point",
-		"fontSize": ".wp-block-dblocks-hotspot .drag-point"
+		"border": ".drag-point",
+		"border.radius": ".drag-point",
+		"backgroundColor": ".drag-point",
+		"color": ".drag-point",
+		"fontSize": ".drag-point"
 	},
 	"textdomain": "dblocks-hotspot",
 	"editorScript": "file:./index.js",
