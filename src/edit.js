@@ -1,13 +1,15 @@
 import { useState, useEffect } from '@wordpress/element';
-import { trash } from '@wordpress/icons';
+import { copy, trash } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
-import { useBlockProps, InspectorControls, InnerBlocks, PanelColorSettings, FontSizePicker, useSetting } from '@wordpress/block-editor';
+import { useBlockProps, InspectorControls, InnerBlocks, BlockControls } from '@wordpress/block-editor';
 import {
 	PanelBody,
 	FocalPointPicker,
 	Button,
 	ToggleControl,
 	__experimentalNumberControl as NumberControl,
+	ToolbarGroup,
+	ToolbarButton,
 } from '@wordpress/components';
 import './editor.scss';
 
@@ -84,7 +86,16 @@ export default function Edit({ attributes, setAttributes }) {
 
 	return (
 		<>
+
 			<InspectorControls>
+				<BlockControls>
+					<ToolbarGroup>
+						<ToolbarButton
+							icon={copy}
+							onClick={addFocalPoint}
+						/>
+					</ToolbarGroup>
+				</BlockControls>
 				<PanelBody title={__('Hotspots Positions', 'dblocks-hotspot')}>
 					<ToggleControl
 						__nextHasNoMarginBottom
