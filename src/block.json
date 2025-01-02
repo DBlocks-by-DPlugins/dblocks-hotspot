@@ -43,7 +43,9 @@
 		"border.radius": ".drag-point",
 		"backgroundColor": ".drag-point",
 		"color": ".drag-point",
-		"fontSize": ".drag-point"
+		"typography": {
+			"fontSize": ".drag-point"
+		}
 	},
 	"textdomain": "dblocks-hotspot",
 	"editorScript": "file:./index.js",
