@@ -41,7 +41,6 @@
 	"selectors": {
 		"border": ".drag-point",
 		"border.radius": ".drag-point",
-		"backgroundColor": ".drag-point",
 		"color": ".drag-point",
 		"typography": {
 			"fontSize": ".drag-point"
