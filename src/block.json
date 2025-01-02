@@ -39,8 +39,11 @@
 		}
 	},
 	"selectors": {
-		"border": ".drag-point",
-		"border.radius": ".drag-point",
+		"border": {
+			"color": ".drag-point",
+			"width": ".drag-point"
+		},
+		"radius": ".drag-point",
 		"color": ".drag-point",
 		"typography": {
 			"fontSize": ".drag-point"
