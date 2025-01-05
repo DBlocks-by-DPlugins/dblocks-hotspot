@@ -84,15 +84,12 @@ export default function Edit({ attributes, setAttributes }) {
 	const globalStyles = window?.GlobalStylesData || {};
 
 	const defaultStyles = {
-		backgroundColor: globalStyles.color?.background || blockProps.style?.backgroundColor,
-		color: globalStyles.color?.text || blockProps.style?.color,
-		fontSize: globalStyles.typography?.fontSize || blockProps.style?.fontSize,
-		borderRadius: globalStyles.border?.radius || blockProps.style?.borderRadius,
-		borderTopColor: globalStyles.border?.top?.color || blockProps.style?.borderTopColor,
-		borderRightColor: globalStyles.border?.right?.color || blockProps.style?.borderRightColor,
-		borderBottomColor: globalStyles.border?.bottom?.color || blockProps.style?.borderBottomColor,
-		borderLeftColor: globalStyles.border?.left?.color || blockProps.style?.borderLeftColor,
-		borderWidth: `${globalStyles.border?.top?.width || blockProps.style?.borderWidth || '0px'} ${globalStyles.border?.right?.width || blockProps.style?.borderWidth || '0px'} ${globalStyles.border?.bottom?.width || blockProps.style?.borderWidth || '0px'} ${globalStyles.border?.left?.width || blockProps.style?.borderWidth || '0px'}`,
+		backgroundColor: blockProps.style?.backgroundColor || globalStyles.color?.background,
+		color: blockProps.style?.color || globalStyles.color?.text,
+		fontSize: blockProps.style?.fontSize || globalStyles.typography?.fontSize,
+		borderRadius: blockProps.style?.borderRadius || globalStyles.border?.radius,
+		borderColor: blockProps.style?.borderColor || globalStyles.border?.top?.color,
+		borderWidth: blockProps.style?.borderWidth || `${globalStyles.border?.top?.width || '0px'} ${globalStyles.border?.right?.width || '0px'} ${globalStyles.border?.bottom?.width || '0px'} ${globalStyles.border?.left?.width || '0px'}`,
 	};
 
 	console.log('Merged Styles:', defaultStyles);
