@@ -14,25 +14,17 @@ import {
 import './editor.scss';
 
 export default function Edit({ attributes, setAttributes }) {
-
-	const blockProps = useBlockProps();
-
-
-	const {
-		hotspotNumbers,
-		startNumber,
-	} = attributes;
+	const { hotspotNumbers, startNumber } = attributes;
 
 	const [isDragging, setIsDragging] = useState(false);
 	const [draggedIndex, setDraggedIndex] = useState(null);
 	const [isDraggingDisabled, setIsDraggingDisabled] = useState(false);
 
-	// Sync the focalPoints array with hotspotNumbers in attributes
 	useEffect(() => {
 		if (hotspotNumbers.length === 0) {
 			setAttributes({ hotspotNumbers: [{ x: 0.5, y: 0.5 }] });
 		}
-	}, []); // Run once when the block is first loaded
+	}, []);
 
 	const addFocalPoint = () => {
 		const updatedHotspotNumbers = [...hotspotNumbers, { x: 0.5, y: 0.5 }];
@@ -40,7 +32,9 @@ export default function Edit({ attributes, setAttributes }) {
 	};
 
 	const updateFocalPoint = (index, newFocalPoint) => {
-		setAttributes({ hotspotNumbers: hotspotNumbers.map((point, i) => i === index ? newFocalPoint : point) });
+		setAttributes({
+			hotspotNumbers: hotspotNumbers.map((point, i) => (i === index ? newFocalPoint : point)),
+		});
 	};
 
 	const handleDrag = (index, newFocalPoint) => {
@@ -82,20 +76,32 @@ export default function Edit({ attributes, setAttributes }) {
 		setAttributes({ startNumber: updatedStartNumber });
 	};
 
-	// console.log({ ...blockProps });
-	// This ill give you the global styles for hotsopt
-	console.log(window?.GlobalStylesData);
+	// *************************************************************************************
+	// Styles
+	// *************************************************************************************
+
+	const blockProps = useBlockProps();
+	const globalStyles = window?.GlobalStylesData || {};
+
+	const mergedStyles = {
+		backgroundColor: blockProps.style?.backgroundColor || globalStyles.color?.background || '#ffffff',
+		color: blockProps.style?.color || globalStyles.color?.text || '#000000',
+		fontSize: blockProps.style?.fontSize || globalStyles.typography?.fontSize || '16px',
+		borderRadius: blockProps.style?.borderRadius || globalStyles.border?.radius || '0px',
+		borderColor: blockProps.style?.borderColor || globalStyles.border?.top?.color || '#000000',
+		borderWidth: blockProps.style?.borderWidth || globalStyles.border?.top?.width || '1px',
+	};
+
+	console.log('Merged Styles:', mergedStyles);
+	console.log('Block Props:', blockProps);
+	console.log('Global Styles:', globalStyles);
 
 	return (
 		<>
-
 			<InspectorControls>
 				<BlockControls>
 					<ToolbarGroup>
-						<ToolbarButton
-							icon={copy}
-							onClick={addFocalPoint}
-						/>
+						<ToolbarButton icon={copy} onClick={addFocalPoint} />
 					</ToolbarGroup>
 				</BlockControls>
 				<PanelBody title={__('Hotspots Positions', 'dblocks-hotspot')}>
@@ -115,11 +121,7 @@ export default function Edit({ attributes, setAttributes }) {
 									onChange={(newFocalPoint) => handleDrag(index, newFocalPoint)}
 								/>
 								{hotspotNumbers.length > 1 && (
-									<Button
-										variant="secondary"
-										icon={trash}
-										onClick={() => deleteFocalPoint(index)}
-									/>
+									<Button variant="secondary" icon={trash} onClick={() => deleteFocalPoint(index)} />
 								)}
 							</div>
 						))}
@@ -139,13 +141,8 @@ export default function Edit({ attributes, setAttributes }) {
 					/>
 				</PanelBody>
 			</InspectorControls>
-
 			<div
 				{...blockProps}
-				style={{
-					color: blockProps.style?.color,
-					fontSize: blockProps.style?.fontSize,
-				}}
 				onMouseMove={handleMouseMove}
 				onMouseUp={handleMouseUp}
 			>
@@ -154,16 +151,9 @@ export default function Edit({ attributes, setAttributes }) {
 						key={index}
 						className="drag-point"
 						style={{
-							backgroundColor: blockProps.style?.backgroundColor,
-							color: blockProps.style?.color,
-							fontSize: blockProps.style?.fontSize,
+							...mergedStyles,
 							left: `${focalPoint.x * 100}%`,
 							top: `${focalPoint.y * 100}%`,
-							width: `calc(${blockProps.style?.fontSize} * 2)`,
-							height: `calc(${blockProps.style?.fontSize} * 2)`,
-							borderRadius: blockProps.style?.borderRadius,
-							borderColor: blockProps.style?.borderColor,
-							borderWidth: blockProps.style?.borderWidth
 						}}
 						onMouseDown={() => handleMouseDown(index)}
 					>
@@ -174,7 +164,4 @@ export default function Edit({ attributes, setAttributes }) {
 			</div>
 		</>
 	);
-
-
 }
-
