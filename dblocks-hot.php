@@ -15,7 +15,7 @@
  */
 
 if (! defined('ABSPATH')) {
-	exit; // Exit if accessed directly.
+    exit; // Exit if accessed directly.
 }
 
 /**
@@ -27,23 +27,24 @@ if (! defined('ABSPATH')) {
  */
 function create_block_focal_block_init()
 {
-	register_block_type(__DIR__ . '/build');
+    register_block_type(__DIR__ . '/build');
 }
 add_action('init', 'create_block_focal_block_init');
 
-function global_style_enqueue_editor_assets() {
+function global_style_enqueue_editor_assets()
+{
     // Fetch global styles
-    $global_styles = wp_get_global_styles(['blocks','dblocks/hotspot' ]);
+    $global_styles = wp_get_global_styles(['blocks', 'dblocks/hotspot']);
 
     // Pass global styles data to JavaScript
     wp_enqueue_script(
         'global-style-editor-script',
-        plugin_dir_url( __FILE__ ) . 'editor.js',
-        [ 'wp-blocks', 'wp-element', 'wp-data', 'wp-block-editor' ],
-        filemtime( plugin_dir_path( __FILE__ ) . 'editor.js' ),
+        plugin_dir_url(__FILE__) . 'build/index.js',
+        ['wp-blocks', 'wp-element', 'wp-data', 'wp-block-editor'],
+        filemtime(plugin_dir_path(__FILE__) . 'build/index.js'),
         true
     );
 
-    wp_localize_script( 'global-style-editor-script', 'GlobalStylesData', $global_styles );
+    wp_localize_script('global-style-editor-script', 'GlobalStylesData', $global_styles);
 }
-add_action( 'enqueue_block_editor_assets', 'global_style_enqueue_editor_assets' );
+add_action('enqueue_block_editor_assets', 'global_style_enqueue_editor_assets');
