@@ -83,16 +83,19 @@ export default function Edit({ attributes, setAttributes }) {
 	const blockProps = useBlockProps();
 	const globalStyles = window?.GlobalStylesData || {};
 
-	const mergedStyles = {
-		backgroundColor: blockProps.style?.backgroundColor || globalStyles.color?.background || '#ffffff',
-		color: blockProps.style?.color || globalStyles.color?.text || '#000000',
-		fontSize: blockProps.style?.fontSize || globalStyles.typography?.fontSize || '16px',
-		borderRadius: blockProps.style?.borderRadius || globalStyles.border?.radius || '0px',
-		borderColor: blockProps.style?.borderColor || globalStyles.border?.top?.color || '#000000',
-		borderWidth: blockProps.style?.borderWidth || globalStyles.border?.top?.width || '1px',
+	const defaultStyles = {
+		backgroundColor: globalStyles.color?.background || blockProps.style?.backgroundColor,
+		color: globalStyles.color?.text || blockProps.style?.color,
+		fontSize: globalStyles.typography?.fontSize || blockProps.style?.fontSize,
+		borderRadius: globalStyles.border?.radius || blockProps.style?.borderRadius,
+		borderTopColor: globalStyles.border?.top?.color || blockProps.style?.borderTopColor,
+		borderRightColor: globalStyles.border?.right?.color || blockProps.style?.borderRightColor,
+		borderBottomColor: globalStyles.border?.bottom?.color || blockProps.style?.borderBottomColor,
+		borderLeftColor: globalStyles.border?.left?.color || blockProps.style?.borderLeftColor,
+		borderWidth: `${globalStyles.border?.top?.width || blockProps.style?.borderWidth || '0px'} ${globalStyles.border?.right?.width || blockProps.style?.borderWidth || '0px'} ${globalStyles.border?.bottom?.width || blockProps.style?.borderWidth || '0px'} ${globalStyles.border?.left?.width || blockProps.style?.borderWidth || '0px'}`,
 	};
 
-	console.log('Merged Styles:', mergedStyles);
+	console.log('Merged Styles:', defaultStyles);
 	console.log('Block Props:', blockProps);
 	console.log('Global Styles:', globalStyles);
 
@@ -151,9 +154,11 @@ export default function Edit({ attributes, setAttributes }) {
 						key={index}
 						className="drag-point"
 						style={{
-							...mergedStyles,
+							...defaultStyles,
 							left: `${focalPoint.x * 100}%`,
 							top: `${focalPoint.y * 100}%`,
+							width: `calc(${defaultStyles.fontSize} * 2)`,
+							height: `calc(${defaultStyles.fontSize} * 2)`,
 						}}
 						onMouseDown={() => handleMouseDown(index)}
 					>
