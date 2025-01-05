@@ -31,16 +31,23 @@ function create_block_focal_block_init()
 }
 add_action('init', 'create_block_focal_block_init');
 
+
+
+// *************************************************************************************
+// Load global styles from Editor > Styles > Blocks > DBlocks Hotspot
+// *************************************************************************************
+
 function global_style_enqueue_editor_assets()
 {
-    // Fetch global styles
-    $global_styles = wp_get_global_styles(['blocks', 'dblocks/hotspot']);
+    // Load the assets data
+    $assets = require(plugin_dir_path(__FILE__) . 'build/index.asset.php');
+    $global_styles = isset($assets['dependencies']) ? $assets['dependencies'] : [];
 
     // Pass global styles data to JavaScript
     wp_enqueue_script(
         'global-style-editor-script',
         plugin_dir_url(__FILE__) . 'build/index.js',
-        ['wp-blocks', 'wp-element', 'wp-data', 'wp-block-editor'],
+        $assets['dependencies'],
         filemtime(plugin_dir_path(__FILE__) . 'build/index.js'),
         true
     );
