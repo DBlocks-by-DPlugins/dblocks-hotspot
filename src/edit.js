@@ -82,7 +82,9 @@ export default function Edit({ attributes, setAttributes }) {
 		setAttributes({ startNumber: updatedStartNumber });
 	};
 
-	console.log({ ...blockProps });
+	// console.log({ ...blockProps });
+	// This ill give you the global styles for hotsopt
+	console.log(window?.GlobalStylesData);
 
 	return (
 		<>
