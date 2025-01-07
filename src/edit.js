@@ -92,10 +92,22 @@ export default function Edit({ attributes, setAttributes }) {
 		borderBottomLeftRadius: `${blockProps.style?.borderBottomLeftRadius || blockProps.style?.borderRadius || globalStyles.border?.radius?.bottomLeft || globalStyles.border?.radius || '0px'}`,
 		borderBottomRightRadius: `${blockProps.style?.borderBottomRightRadius || blockProps.style?.borderRadius || globalStyles.border?.radius?.bottomRight || globalStyles.border?.radius || '0px'}`,
 
-		borderTop: `${blockProps.style.borderTopWidth || globalStyles.border?.top?.width || '0px'} ${globalStyles.border?.top?.style || 'solid'} ${blockProps.style.borderTopColor || blockProps.style.borderColor || globalStyles.border?.top?.color || 'transparent'}`,
-		borderRight: `${blockProps.style.borderRightWidth || globalStyles.border?.right?.width || '0px'} ${globalStyles.border?.right?.style || 'solid'} ${blockProps.style.borderRightColor || blockProps.style.borderColor || globalStyles.border?.right?.color || 'transparent'}`,
-		borderBottom: `${blockProps.style.borderBottomWidth || globalStyles.border?.bottom?.width || '0px'} ${globalStyles.border?.bottom?.style || 'solid'} ${blockProps.style.borderBottomColor || blockProps.style.borderColor || globalStyles.border?.bottom?.color || 'transparent'}`,
-		borderLeft: `${blockProps.style.borderLeftWidth || globalStyles.border?.left?.width || '0px'} ${globalStyles.border?.left?.style || 'solid'} ${blockProps.style.borderLeftColor || blockProps.style.borderColor || globalStyles.border?.left?.color || 'transparent'}`,
+		borderTopWidth: blockProps.style.borderTopWidth || globalStyles.border?.top?.width || '0px',
+		borderTopStyle: globalStyles.border?.top?.style || 'solid',
+		borderTopColor: blockProps.style.borderTopColor || blockProps.style.borderColor || globalStyles.border?.top?.color || 'transparent',
+
+		borderRightWidth: blockProps.style.borderRightWidth || globalStyles.border?.right?.width || '0px',
+		borderRightStyle: globalStyles.border?.right?.style || 'solid',
+		borderRightColor: blockProps.style.borderRightColor || blockProps.style.borderColor || globalStyles.border?.right?.color || 'transparent',
+
+		borderBottomWidth: blockProps.style.borderBottomWidth || globalStyles.border?.bottom?.width || '0px',
+		borderBottomStyle: globalStyles.border?.bottom?.style || 'solid',
+		borderBottomColor: blockProps.style.borderBottomColor || blockProps.style.borderColor || globalStyles.border?.bottom?.color || 'transparent',
+
+		borderLeftWidth: blockProps.style.borderLeftWidth || globalStyles.border?.left?.width || '0px',
+		borderLeftStyle: globalStyles.border?.left?.style || 'solid',
+		borderLeftColor: blockProps.style.borderLeftColor || blockProps.style.borderColor || globalStyles.border?.left?.color || 'transparent',
+
 		borderWidth: blockProps.style?.borderWidth || `${globalStyles.border?.top?.width || '0px'} ${globalStyles.border?.right?.width || '0px'} ${globalStyles.border?.bottom?.width || '0px'} ${globalStyles.border?.left?.width || '0px'}`,
 	};
 
