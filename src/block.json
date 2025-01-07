@@ -11,11 +11,11 @@
 	"supports": {
 		"html": true,
 		"color": true,
-		"border": {
+		"__experimentalBorder": {
 			"color": true,
 			"width": true,
 			"radius": true,
-			"default": {
+			"__experimentalDefaultControls": {
 				"radius": false
 			}
 		},
