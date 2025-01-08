@@ -1,4 +1,4 @@
-import { useState, useEffect } from '@wordpress/element';
+import { useState, useEffect, useMemo } from '@wordpress/element';
 import { copy, trash } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, InspectorControls, InnerBlocks, BlockControls } from '@wordpress/block-editor';
@@ -99,9 +99,31 @@ export default function Edit({ attributes, setAttributes }) {
 		borderWidth: blockProps.style?.borderWidth || `${globalStyles.border?.top?.width || '0px'} ${globalStyles.border?.right?.width || '0px'} ${globalStyles.border?.bottom?.width || '0px'} ${globalStyles.border?.left?.width || '0px'}`,
 	};
 
-	console.log('Merged Styles:', defaultStyles);
-	console.log('Block Props:', blockProps);
-	console.log('Global Styles:', globalStyles);
+	const memoizedDefaultStyles = useMemo(() => defaultStyles, [
+		defaultStyles.backgroundColor,
+		defaultStyles.color,
+		defaultStyles.fontSize,
+		defaultStyles.borderTopLeftRadius,
+		defaultStyles.borderTopRightRadius,
+		defaultStyles.borderBottomLeftRadius,
+		defaultStyles.borderBottomRightRadius,
+		defaultStyles.borderTop,
+		defaultStyles.borderRight,
+		defaultStyles.borderBottom,
+		defaultStyles.borderLeft,
+		defaultStyles.borderWidth,
+	  ]);
+	  
+
+	// Updating attributes only when styles change
+	useEffect(() => {
+		  setAttributes({ defaultStylesBlock: defaultStyles });
+	  }, [memoizedDefaultStyles]);
+	  
+
+	// console.log('Merged Styles:', defaultStyles);
+	// console.log('Block Props:', blockProps);
+	// console.log('Global Styles:', globalStyles);
 
 	return (
 		<>

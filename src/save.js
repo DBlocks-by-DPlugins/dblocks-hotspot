@@ -7,6 +7,7 @@ export default function save({ attributes }) {
 		hotspotTextColor,
 		startNumber,
 		hotspotFontSize,
+		defaultStylesBlock
 	} = attributes;
 
 	return (
@@ -17,13 +18,11 @@ export default function save({ attributes }) {
 					key={index}
 					className="drag-point"
 					style={{
+						...defaultStylesBlock,
 						left: `${focalPoint.x * 100}%`,
 						top: `${focalPoint.y * 100}%`,
-						backgroundColor: 'var(--wp--preset--color--background)',
-						color: 'var(--wp--preset--color)',
-						width: `calc(${hotspotFontSize} * 2)`,
-						height: `calc(${hotspotFontSize} * 2)`,
-						fontSize: hotspotFontSize,
+						width: `calc(${defaultStylesBlock?.fontSize} * 2)`,
+						height: `calc(${defaultStylesBlock?.fontSize} * 2)`,
 					}}
 				>
 					{startNumber + index}

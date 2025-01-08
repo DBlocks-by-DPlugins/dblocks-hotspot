@@ -36,6 +36,9 @@
 		"startNumber": {
 			"type": "number",
 			"default": 1
+		},
+		"defaultStylesBlock": {
+			"type": "object"
 		}
 	},
 	"selectors": {
