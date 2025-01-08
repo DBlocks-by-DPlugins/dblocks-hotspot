@@ -1,20 +1,22 @@
 === Focal ===
-Contributors:      The WordPress Contributors
+Contributors:      DBlocks, DPlugins, Marko Krstic
 Tags:              block
 Tested up to:      6.6
 Stable tag:        0.1.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
-Example block scaffolded with Create Block tool.
+Create and manage interactive hotspot elements within the block editor.
 
 == Description ==
 
-This is the long description. No limit, and you can use Markdown (as well as in the following sections).
-
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and
-Markdown parsed.
-
+Description: DBlocks Hotspot is a WordPress plugin that allows users to create and manage interactive hotspot elements within the block editor.
+Key Features:
+Interactive Hotspots: Easily add, delete, and drag hotspot markers.
+Customizable Appearance: Supports various styling options for hotspots.
+Global Styles Integration: Adapts to the site's overall design.
+User-Friendly Interface: Simple management of hotspot positions and settings.
+Installation: Upload to /wp-content/plugins/dblocks-hotspot or install via the WordPress plugins screen. After activation, the block is ready for use in the editor.
 == Installation ==
 
 This section describes how to install the plugin and get it working.

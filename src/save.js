@@ -3,10 +3,7 @@ import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
 export default function save({ attributes }) {
 	const {
 		hotspotNumbers,
-		hotspotBackgroundColor,
-		hotspotTextColor,
 		startNumber,
-		hotspotFontSize,
 		defaultStylesBlock
 	} = attributes;
 
