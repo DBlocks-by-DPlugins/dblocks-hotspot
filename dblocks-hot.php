@@ -3,10 +3,11 @@
 /**
  * Plugin Name:       DBlocks Hotspot
  * Description:       Create and manage interactive hotspot elements within the block editor.
- * Requires at least: 6.6
+ * Requires at least: 6.3
  * Requires PHP:      7.2
- * Version:           0.1.0
- * Author:            The WordPress Contributors
+ * Version:           1.0.0
+ * Author:            DPlugins
+ * Author URI:        https://dplugins.com/
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       dblocks-hotspot
