@@ -26,7 +26,7 @@ if (! defined('ABSPATH')) {
  *
  * @see https://developer.wordpress.org/reference/functions/register_block_type/
  */
-function create_block_focal_block_init()
+function dblocks_hotspot_register_block()
 {
     register_block_type(__DIR__ . '/build', array(
         'category' => 'dblocks'
