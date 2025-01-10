@@ -32,7 +32,7 @@ function dblocks_hotspot_register_block()
         'category' => 'dblocks'
     ));
 }
-add_action('init', 'create_block_focal_block_init');
+add_action('init', 'dblocks_hotspot_register_block');
 
 
 
