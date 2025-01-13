@@ -6,7 +6,7 @@
 	"title": "DBlocks Hotspot",
 	"category": "widgets",
 	"icon": "marker",
-	"description": "Example block scaffolded with Create Block tool.",
+	"description": "Create and manage interactive hotspot elements within the block editor.",
 	"example": {},
 	"supports": {
 		"html": true,
