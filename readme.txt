@@ -1,7 +1,7 @@
 === DBlocks Hotspot ===
 Contributors:      DBlocks, DPlugins, Marko Krstic
-Tags:              block
-Tested up to:      6.7
+Tags:              block, dblocks, hotspot, image, tag image
+Tested up to:      6.7.2
 Stable tag:        1.0.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -27,16 +27,6 @@ e.g.
 1. Activate the plugin through the 'Plugins' screen in WordPress
 
 
-== Frequently Asked Questions ==
-
-= A question that someone might have =
-
-An answer to that question.
-
-= What about foo bar? =
-
-Answer to foo bar dilemma.
-
 == Screenshots ==
 
 1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
@@ -47,7 +37,7 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 
 == Changelog ==
 
-= 0.1.0 =
+= 1.0.0 =
 * Release
 
 == Arbitrary section ==
