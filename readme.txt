@@ -2,7 +2,7 @@
 Contributors:      DBlocks, DPlugins, Marko Krstic
 Tags:              block, dblocks, hotspot, image, tag image
 Tested up to:      6.7.2
-Stable tag:        1.0.1
+Stable tag:        1.0.2
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -35,6 +35,9 @@ e.g.
 4. Site wide styles & overwrite where you need
 
 == Changelog ==
+
+= 1.0.2 =
+* Bump test
 
 = 1.0.1 =
 * Assets update

@@ -42,4 +42,4 @@ jobs:
         with:
           files: dblocks-hotspot.zip
         env:
-          GITHUB_TOKEN: ${{ secrets.WPSCIPTSTOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
