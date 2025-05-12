@@ -5,7 +5,7 @@
  * Description:       Create and manage interactive hotspot elements within the block editor.
  * Requires at least: 6.3
  * Requires PHP:      7.2
- * Version:           1.0.2
+ * Version:           1.0.3
  * Author:            DPlugins
  * Author URI:        https://dplugins.com/
  * License:           GPL-2.0-or-later

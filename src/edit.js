@@ -148,6 +148,7 @@ export default function Edit({ attributes, setAttributes }) {
 									onDragStart={(newFocalPoint) => handleDrag(index, newFocalPoint)}
 									onDrag={(newFocalPoint) => handleDrag(index, newFocalPoint)}
 									onChange={(newFocalPoint) => handleDrag(index, newFocalPoint)}
+									__nextHasNoMarginBottom
 								/>
 								{hotspotNumbers.length > 1 && (
 									<Button variant="secondary" icon={trash} onClick={() => deleteFocalPoint(index)} />
